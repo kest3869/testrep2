@@ -19,22 +19,12 @@ def driver():
      print('the approximate fixed point is:',xstar)
      print('f1(xstar):',f1(xstar))
      print('Error message reads:',ier)
-    
-#test f2 '''
-     x0 = 1
-     [xstar,ier] = fixedpt(f2,x0,tol,Nmax)
-     print('the approximate fixed point is:',xstar)
-     print('f2(xstar):',f2(xstar))
-     print('Error message reads:',ier)
 
      print("ANSWERS TO PROMPTS BELOW")
      print()
      print("PROBLEM 3:")
      print("The code overflows if the iter is greater than 3, this is why you normalize data befor shoving it into machine learning numbers")
      
-
-
-
 # define routines
 def fixedpt(f,x0,tol,Nmax):
 
