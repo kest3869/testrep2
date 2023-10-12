@@ -5,11 +5,11 @@ import matplotlib.pyplot as plt
 
 def driver():
 
-    f = lambda x: np.exp(x)
+    f = lambda x: 1 / (1 + 100*x**2)
 
     N = 3
     ''' interval'''
-    a = 0
+    a = -1
     b = 1
    
     ''' create equispaced interpolation nodes'''
@@ -71,8 +71,6 @@ def driver():
     for i in range(N+1):
        y[i] = f(x[i])
     print(y)
-
-
 
 def eval_lagrange(xeval,xint,yint,N):
 
