@@ -42,17 +42,21 @@ def driver():
     plt.legend()
     plt.show()
 
-def eval_legendre(n, x):
+def eval_legendre(n, x, arr=None):
+    if arr is None:
+        arr = []
     if n == 0:
-        return [1.0]
+        arr.insert(0, 1.0)
     elif n == 1:
-        return [1.0, x]
+        arr.insert(0, x)
+        arr.insert(0, 1.0)
     else:
-        phi = [1.0, x]
-        for i in range(2, n + 1):
-            phi_next = (1/i)*(2 * i * x * phi[-1] - (i - 1) * phi[-2])
-            phi.append(phi_next)
-        return phi
+        phi_n_minus_1 = eval_legendre(n - 1, x, arr)
+        phi_n_minus_2 = eval_legendre(n - 2, x, arr)
+        phi_n = (1 / (n + 1)) * ((2 * (n + 1) * x * phi_n_minus_1[0] - n * phi_n_minus_2[0]))
+        arr.insert(0, phi_n)
+    return arr
+
     
 def eval_legendre_expansion(f,a,b,w,n,x): 
 
