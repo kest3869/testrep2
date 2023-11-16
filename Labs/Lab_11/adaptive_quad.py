@@ -5,36 +5,38 @@ from gauss_legendre import *
 # the following three can be passed
 # as the method parameter to the main adaptive_quad() function
 
-# modified from ChatGPT (ChatGPT version in pre_lab.py)
-def composite_trapezoidal_rule(N, a, b, f):
-    h = (b - a) / N
-    result = 0.5 * (f(a) + f(b))
-    nodes = []
-    for i in range(1, N):
-        result += f(a + i * h)
-        nodes.append(i*h)
-    result *= h
-    return result, nodes, N
+def CompTrap(a,b,n,f):
+    h = (b-a)/n
+    xnode = a+np.arange(0,n+1)*h
+
+    I_trap = h*f(xnode[0])*1/2
+    
+    for j in range(1,n):
+         I_trap = I_trap+h*f(xnode[j])
+    I_trap= I_trap + 1/2*h*f(xnode[n])
+    
+    return I_trap, xnode, n
+
+def CompSimp(a,b,n,f):
+    h = (b-a)/n
+    xnode = a+np.arange(0,n+1)*h
+    I_simp = f(xnode[0])
+    nhalf = n/2
+    for j in range(1,int(nhalf)+1):
+         # even part 
+         I_simp = I_simp+2*f(xnode[2*j])
+         # odd part
+         I_simp = I_simp +4*f(xnode[2*j-1])
+    I_simp= I_simp + f(xnode[n])
+    I_simp = h/3*I_simp
+    return I_simp, xnode, n 
 
 def eval_composite_trap(M,a,b,f):
-  return composite_trapezoidal_rule(M,a,b,f) # calling pre-lab version of function
+  return CompTrap(a,b,M,f) # calling pre-lab version of function
 
-# modified from ChatGPT (ChatGPT version in pre_lab.py)
-def simpsons_rule(a, b, f, N):
-    h = (b - a) / N
-    result = f(a) + f(b)
-    nodes = []
-    for i in range (1,N):
-       nodes.append(i*h)
-    for i in range(1, N, 2):
-        result += 4 * f(a + i * h)
-    for i in range(2, N-1, 2):
-        result += 2 * f(a + i * h)
-    result *= h / 3
-    return result, nodes, N
 
 def eval_composite_simpsons(M,a,b,f):
-  return simpsons_rule(a, b, f, M) # calling pre-lab version of code 
+  return CompSimp(a,b,M,f) # calling pre-lab version of code 
 
 def eval_gauss_quad(M,a,b,f):
   """
